@@ -78,6 +78,8 @@ const ESTUDIANTES_POR_DEFECTO = [
 // VARIABLES GLOBALES
 // ============================================
 let estudiantes = [];
+let calificaciones = [];
+const STORAGE_KEY_CAL = 'becatrack_calificaciones';
 
 // ============================================
 // REFERENCIAS AL DOM
@@ -104,6 +106,24 @@ const statAlertaCard = document.getElementById('stat-alerta-card');
 const linkAcerca = document.getElementById('link-acerca');
 const linkAyuda = document.getElementById('link-ayuda');
 
+// Nuevas referencias para agregar estudiante
+const btnMostrarFormulario = document.getElementById('btn-mostrar-formulario');
+const formularioEstudiante = document.getElementById('formulario-estudiante');
+const formAgregarEstudiante = document.getElementById('form-agregar-estudiante');
+const btnCancelarFormulario = document.getElementById('btn-cancelar-formulario');
+const campoNombre = document.getElementById('campo-nombre');
+const campoPrograma = document.getElementById('campo-programa');
+const campoSemestre = document.getElementById('campo-semestre');
+const campoMateria = document.getElementById('campo-materia');
+
+// Referencias para calificaciones
+const selectEstudianteCal = document.getElementById('select-estudiante-cal');
+const campoMateriaCal = document.getElementById('campo-materia-cal');
+const campoCalificacion = document.getElementById('campo-calificacion');
+const btnGuardarCalificacion = document.getElementById('btn-guardar-calificacion');
+const tbodyCalificaciones = document.getElementById('tbody-calificaciones');
+const calificacionesVacia = document.getElementById('calificaciones-vacia');
+
 // ============================================
 // FUNCIONES DE PERSISTENCIA (LOCALSTORAGE)
 // ============================================
@@ -128,6 +148,25 @@ function cargarEstudiantes() {
  */
 function guardarEstudiantes() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(estudiantes));
+}
+
+/**
+ * Carga las calificaciones desde localStorage.
+ */
+function cargarCalificaciones() {
+    const datos = localStorage.getItem(STORAGE_KEY_CAL);
+    if (datos) {
+        calificaciones = JSON.parse(datos);
+    } else {
+        calificaciones = [];
+    }
+}
+
+/**
+ * Guarda el array de calificaciones en localStorage.
+ */
+function guardarCalificaciones() {
+    localStorage.setItem(STORAGE_KEY_CAL, JSON.stringify(calificaciones));
 }
 
 // ============================================
@@ -159,6 +198,9 @@ function irADocente() {
     mostrarVista('vista-docente');
     renderizarTabla();
     actualizarEstadisticas();
+    renderizarCalificaciones();
+    actualizarSelectEstudiantes();
+    formularioEstudiante.style.display = 'none';
 }
 
 /**
@@ -201,6 +243,235 @@ function actualizarEstadisticas() {
     } else {
         statAlertaCard.classList.remove('alerta-activa');
     }
+}
+
+// ============================================
+// FUNCIONES — AGREGAR ESTUDIANTE
+// ============================================
+
+/**
+ * Muestra u oculta el formulario de agregar estudiante.
+ */
+function toggleFormulario() {
+    const visible = formularioEstudiante.style.display === 'none';
+    formularioEstudiante.style.display = visible ? 'block' : 'none';
+    if (visible) {
+        campoNombre.focus();
+    }
+}
+
+/**
+ * Agrega un nuevo estudiante desde el formulario.
+ * @param {Event} e - Evento del formulario.
+ */
+function agregarEstudiante(e) {
+    e.preventDefault();
+
+    const nombre = campoNombre.value.trim();
+    const programa = campoPrograma.value.trim();
+    const semestre = campoSemestre.value;
+    const materia = campoMateria.value.trim();
+
+    if (!nombre || !programa || !semestre) {
+        alert('Por favor completa todos los campos obligatorios.');
+        return;
+    }
+
+    // Generar nuevo ID
+    const nuevoId = estudiantes.length > 0
+        ? Math.max.apply(null, estudiantes.map(function(e) { return e.id; })) + 1
+        : 1;
+
+    const nuevoEstudiante = {
+        id: nuevoId,
+        nombre: nombre,
+        programa: programa,
+        semestre: semestre,
+        asistencia: '—',
+        nota: null,
+        estado: 'Normal',
+        observaciones: [],
+        materiaPrincipal: materia || ''
+    };
+
+    estudiantes.push(nuevoEstudiante);
+    guardarEstudiantes();
+
+    // Limpiar formulario
+    formAgregarEstudiante.reset();
+    formularioEstudiante.style.display = 'none';
+
+    // Actualizar vista
+    renderizarTabla();
+    actualizarEstadisticas();
+    actualizarSelectEstudiantes();
+
+    alert('Estudiante "' + nombre + '" agregado exitosamente.');
+}
+
+// ============================================
+// FUNCIONES — CALIFICACIONES POR MATERIAS
+// ============================================
+
+/**
+ * Actualiza el select de estudiantes para calificaciones.
+ */
+function actualizarSelectEstudiantes() {
+    const valorActual = selectEstudianteCal.value;
+    selectEstudianteCal.innerHTML = '<option value="">-- Seleccionar estudiante --</option>';
+
+    estudiantes.forEach(function(est) {
+        const option = document.createElement('option');
+        option.value = est.id;
+        option.textContent = est.nombre + ' (' + est.programa + ')';
+        selectEstudianteCal.appendChild(option);
+    });
+
+    // Restaurar selección si aún existe
+    if (valorActual) {
+        selectEstudianteCal.value = valorActual;
+    }
+}
+
+/**
+ * Guarda una calificación para un estudiante en una materia.
+ */
+function guardarCalificacion() {
+    const estudianteId = parseInt(selectEstudianteCal.value, 10);
+    const materia = campoMateriaCal.value.trim();
+    const calificacion = parseFloat(campoCalificacion.value);
+
+    if (!estudianteId || !materia || isNaN(calificacion)) {
+        alert('Por favor completa todos los campos: estudiante, materia y calificación.');
+        return;
+    }
+
+    if (calificacion < 0 || calificacion > 5) {
+        alert('La calificación debe estar entre 0 y 5.');
+        return;
+    }
+
+    const est = estudiantes.find(function(e) { return e.id === estudianteId; });
+    if (!est) return;
+
+    // Determinar estado de la calificación
+    let estadoCal = 'Aprobado';
+    if (calificacion < 3) {
+        estadoCal = 'Reprobado';
+    } else if (calificacion < 3.5) {
+        estadoCal = 'Aceptable';
+    }
+
+    const ahora = new Date();
+    const fechaHora = ahora.toLocaleString('es-CO', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+
+    const nuevaCal = {
+        id: Date.now(),
+        estudianteId: estudianteId,
+        estudianteNombre: est.nombre,
+        materia: materia,
+        calificacion: calificacion,
+        estado: estadoCal,
+        fecha: fechaHora
+    };
+
+    calificaciones.push(nuevaCal);
+    guardarCalificaciones();
+
+    // Limpiar campos
+    campoMateriaCal.value = '';
+    campoCalificacion.value = '';
+    selectEstudianteCal.value = '';
+
+    renderizarCalificaciones();
+    alert('Calificación de ' + est.nombre + ' en "' + materia + '" guardada exitosamente.');
+}
+
+/**
+ * Elimina una calificación por su ID.
+ * @param {number} id - ID de la calificación.
+ */
+function eliminarCalificacion(id) {
+    const confirmar = confirm('¿Estás seguro de eliminar esta calificación?');
+    if (!confirmar) return;
+
+    calificaciones = calificaciones.filter(function(c) { return c.id !== id; });
+    guardarCalificaciones();
+    renderizarCalificaciones();
+}
+
+/**
+ * Renderiza la tabla de calificaciones.
+ */
+function renderizarCalificaciones() {
+    tbodyCalificaciones.innerHTML = '';
+
+    if (calificaciones.length === 0) {
+        calificacionesVacia.style.display = 'block';
+        return;
+    }
+
+    calificacionesVacia.style.display = 'none';
+
+    calificaciones.forEach(function(cal) {
+        const tr = document.createElement('tr');
+
+        // Estudiante
+        const tdEst = document.createElement('td');
+        tdEst.textContent = cal.estudianteNombre;
+        tr.appendChild(tdEst);
+
+        // Materia
+        const tdMat = document.createElement('td');
+        tdMat.textContent = cal.materia;
+        tr.appendChild(tdMat);
+
+        // Calificación
+        const tdCal = document.createElement('td');
+        tdCal.textContent = cal.calificacion.toFixed(1);
+        tdCal.className = cal.calificacion < 3 ? 'cal-baja' : 'cal-ok';
+        tr.appendChild(tdCal);
+
+        // Estado
+        const tdEstado = document.createElement('td');
+        const badge = document.createElement('span');
+        badge.className = 'estado-badge ';
+        if (cal.estado === 'Aprobado') {
+            badge.className += 'estado-normal';
+        } else if (cal.estado === 'Reprobado') {
+            badge.className += 'estado-alerta';
+        } else {
+            badge.className += 'estado-normal';
+        }
+        badge.textContent = cal.estado;
+        tdEstado.appendChild(badge);
+        tr.appendChild(tdEstado);
+
+        // Fecha
+        const tdFecha = document.createElement('td');
+        tdFecha.textContent = cal.fecha;
+        tdFecha.style.fontSize = '0.8rem';
+        tdFecha.style.color = '#888';
+        tr.appendChild(tdFecha);
+
+        // Acciones
+        const tdAcciones = document.createElement('td');
+        const btnEliminar = document.createElement('button');
+        btnEliminar.className = 'btn-asistencia btn-falto';
+        btnEliminar.textContent = '✕ Eliminar';
+        btnEliminar.setAttribute('data-id', cal.id);
+        btnEliminar.setAttribute('data-accion', 'eliminar-cal');
+        tdAcciones.appendChild(btnEliminar);
+        tr.appendChild(tdAcciones);
+
+        tbodyCalificaciones.appendChild(tr);
+    });
 }
 
 // ============================================
@@ -715,6 +986,31 @@ function inicializarEventListeners() {
             return;
         }
     });
+
+    // Botón mostrar/ocultar formulario de agregar estudiante
+    btnMostrarFormulario.addEventListener('click', toggleFormulario);
+
+    // Formulario de agregar estudiante
+    formAgregarEstudiante.addEventListener('submit', agregarEstudiante);
+
+    // Botón cancelar formulario
+    btnCancelarFormulario.addEventListener('click', function() {
+        formularioEstudiante.style.display = 'none';
+    });
+
+    // Botón guardar calificación
+    btnGuardarCalificacion.addEventListener('click', guardarCalificacion);
+
+    // Delegación de eventos en tabla de calificaciones (para eliminar)
+    tbodyCalificaciones.addEventListener('click', function(e) {
+        const target = e.target;
+        const btnEliminar = target.closest('[data-accion="eliminar-cal"]');
+        if (btnEliminar) {
+            const id = parseInt(btnEliminar.getAttribute('data-id'), 10);
+            eliminarCalificacion(id);
+            return;
+        }
+    });
 }
 
 // ============================================
@@ -723,6 +1019,7 @@ function inicializarEventListeners() {
 window.addEventListener('load', function() {
     // Cargar datos desde localStorage o usar defaults
     cargarEstudiantes();
+    cargarCalificaciones();
 
     // Asignar todos los event listeners
     inicializarEventListeners();

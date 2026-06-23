@@ -168,6 +168,52 @@
                 </div>
             </div>
 
+            <!-- Botón para abrir formulario de agregar estudiante -->
+            <div class="acciones-superiores">
+                <button class="btn-agregar-estudiante" id="btn-mostrar-formulario">&#10010; Agregar Estudiante</button>
+            </div>
+
+            <!-- Formulario para agregar estudiante (oculto por defecto) -->
+            <div class="formulario-estudiante" id="formulario-estudiante" style="display: none;">
+                <h3 class="formulario-titulo">&#128221; Registrar Nuevo Estudiante</h3>
+                <form id="form-agregar-estudiante">
+                    <div class="formulario-grid">
+                        <div class="campo-grupo">
+                            <label for="campo-nombre">Nombre completo *</label>
+                            <input type="text" id="campo-nombre" placeholder="Ej: María García López" required>
+                        </div>
+                        <div class="campo-grupo">
+                            <label for="campo-programa">Programa académico *</label>
+                            <input type="text" id="campo-programa" placeholder="Ej: Ingeniería de Sistemas" required>
+                        </div>
+                        <div class="campo-grupo">
+                            <label for="campo-semestre">Semestre *</label>
+                            <select id="campo-semestre" required>
+                                <option value="">-- Seleccionar --</option>
+                                <option value="1°">1°</option>
+                                <option value="2°">2°</option>
+                                <option value="3°">3°</option>
+                                <option value="4°">4°</option>
+                                <option value="5°">5°</option>
+                                <option value="6°">6°</option>
+                                <option value="7°">7°</option>
+                                <option value="8°">8°</option>
+                                <option value="9°">9°</option>
+                                <option value="10°">10°</option>
+                            </select>
+                        </div>
+                        <div class="campo-grupo">
+                            <label for="campo-materia">Materia principal</label>
+                            <input type="text" id="campo-materia" placeholder="Ej: Cálculo I">
+                        </div>
+                    </div>
+                    <div class="formulario-botones">
+                        <button type="submit" class="btn-formulario btn-guardar-estudiante">&#10003; Guardar Estudiante</button>
+                        <button type="button" class="btn-formulario btn-cancelar" id="btn-cancelar-formulario">&#10005; Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
             <!-- Tabla de estudiantes -->
             <div class="table-container">
                 <table class="tabla-estudiantes" id="tabla-estudiantes">
@@ -187,6 +233,52 @@
                         <!-- Filas generadas dinámicamente por JS -->
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Sección de Calificaciones por Materias -->
+            <div class="calificaciones-seccion">
+                <h3 class="calificaciones-titulo">&#128218; Registro de Calificaciones por Materias</h3>
+                
+                <!-- Selector de estudiante y materia -->
+                <div class="calificaciones-filtros">
+                    <div class="campo-grupo">
+                        <label for="select-estudiante-cal">Estudiante</label>
+                        <select id="select-estudiante-cal">
+                            <option value="">-- Seleccionar estudiante --</option>
+                        </select>
+                    </div>
+                    <div class="campo-grupo">
+                        <label for="campo-materia-cal">Materia</label>
+                        <input type="text" id="campo-materia-cal" placeholder="Ej: Cálculo Diferencial">
+                    </div>
+                    <div class="campo-grupo">
+                        <label for="campo-calificacion">Calificación (0-5)</label>
+                        <input type="number" id="campo-calificacion" min="0" max="5" step="0.1" placeholder="Ej: 4.5">
+                    </div>
+                    <div class="campo-grupo campo-grupo-btn">
+                        <button class="btn-formulario btn-guardar-cal" id="btn-guardar-calificacion">&#128190; Guardar Calificación</button>
+                    </div>
+                </div>
+
+                <!-- Tabla de calificaciones registradas -->
+                <div class="table-container tabla-calificaciones-container">
+                    <table class="tabla-estudiantes tabla-calificaciones" id="tabla-calificaciones">
+                        <thead>
+                            <tr>
+                                <th>Estudiante</th>
+                                <th>Materia</th>
+                                <th>Calificación</th>
+                                <th>Estado</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-calificaciones">
+                            <!-- Filas generadas dinámicamente por JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <p class="calificaciones-vacia" id="calificaciones-vacia">No hay calificaciones registradas aún.</p>
             </div>
         </div>
     </section>
