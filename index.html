@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BecaTrack — Apoyo a Becas y Salud Mental</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ======================================== -->
+    <!-- VISTA 1: PANTALLA DE INICIO (HOME)       -->
+    <!-- ======================================== -->
+    <section id="vista-home" class="vista activa">
+        <!-- Fondo decorativo con formas geométricas -->
+        <div class="home-bg-decor">
+            <div class="decor-shape decor-circle-1"></div>
+            <div class="decor-shape decor-circle-2"></div>
+            <div class="decor-shape decor-triangle-1"></div>
+            <div class="decor-shape decor-triangle-2"></div>
+            <div class="decor-shape decor-dots"></div>
+        </div>
+
+        <div class="home-container">
+            <!-- Encabezado -->
+            <header class="home-header">
+                <h1 class="home-titulo">APOYO A BECAS Y SALUD MENTAL</h1>
+                <p class="home-subtitulo">¡Bienvenido/a! Por favor selecciona tu rol para acceder a tu portal.</p>
+            </header>
+
+            <!-- Tarjetas de selección de rol -->
+            <div class="home-cards">
+                <!-- Tarjeta Docente -->
+                <div class="role-card role-docente">
+                    <div class="role-card-header teal">DOCENTE</div>
+                    <div class="role-card-body">
+                        <div class="role-card-illustration">
+                            <!-- SVG: Ilustración de docente en clase -->
+                            <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" class="illustration-svg">
+                                <!-- Pizarra -->
+                                <rect x="30" y="10" width="140" height="80" rx="4" fill="#e8f4f8" stroke="#b0d4e1" stroke-width="2"/>
+                                <rect x="40" y="20" width="60" height="4" rx="2" fill="#2A9D8F" opacity="0.5"/>
+                                <rect x="40" y="30" width="80" height="4" rx="2" fill="#2A9D8F" opacity="0.4"/>
+                                <rect x="40" y="40" width="50" height="4" rx="2" fill="#2A9D8F" opacity="0.3"/>
+                                <!-- Escritorio -->
+                                <rect x="20" y="90" width="160" height="8" rx="3" fill="#8B6F47"/>
+                                <rect x="30" y="98" width="8" height="40" rx="2" fill="#6B5535"/>
+                                <rect x="162" y="98" width="8" height="40" rx="2" fill="#6B5535"/>
+                                <!-- Docente (de pie, señalando) -->
+                                <circle cx="100" cy="55" r="12" fill="#F5D0A9"/>
+                                <rect x="88" y="67" width="24" height="30" rx="4" fill="#2A9D8F"/>
+                                <!-- Brazo señalando pizarra -->
+                                <line x1="112" y1="72" x2="140" y2="45" stroke="#F5D0A9" stroke-width="6" stroke-linecap="round"/>
+                                <!-- Piernas -->
+                                <rect x="92" y="97" width="8" height="20" rx="2" fill="#1B3A5C"/>
+                                <rect x="100" y="97" width="8" height="20" rx="2" fill="#1B3A5C"/>
+                                <!-- Libros en escritorio -->
+                                <rect x="55" y="82" width="16" height="10" rx="2" fill="#E07B2A"/>
+                                <rect x="55" y="76" width="16" height="8" rx="2" fill="#2A9D8F"/>
+                                <rect x="130" y="84" width="12" height="8" rx="2" fill="#1B3A5C"/>
+                                <!-- Alumnos (sentados) -->
+                                <circle cx="60" cy="115" r="8" fill="#F5D0A9"/>
+                                <rect x="52" y="123" width="16" height="14" rx="3" fill="#5B9BD5"/>
+                                <circle cx="100" cy="115" r="8" fill="#D4A574"/>
+                                <rect x="92" y="123" width="16" height="14" rx="3" fill="#70AD47"/>
+                                <circle cx="140" cy="115" r="8" fill="#F5D0A9"/>
+                                <rect x="132" y="123" width="16" height="14" rx="3" fill="#E07B2A"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <button class="role-btn role-btn-teal" id="btn-docente">INGRESAR COMO DOCENTE</button>
+                </div>
+
+                <!-- Tarjeta Psicólogo -->
+                <div class="role-card role-psicologo">
+                    <div class="role-card-header naranja">PSICÓLOGO/A</div>
+                    <div class="role-card-body">
+                        <div class="role-card-illustration">
+                            <!-- SVG: Ilustración de sesión de psicología -->
+                            <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" class="illustration-svg">
+                                <!-- Sala de espera / Consultorio -->
+                                <rect x="0" y="130" width="200" height="30" fill="#f0faf8"/>
+                                <!-- Planta decorativa -->
+                                <rect x="160" y="80" width="8" height="50" rx="4" fill="#6B8E5A"/>
+                                <ellipse cx="164" cy="70" rx="18" ry="16" fill="#7CB342"/>
+                                <ellipse cx="155" cy="75" rx="12" ry="10" fill="#8BC34A"/>
+                                <ellipse cx="173" cy="75" rx="12" ry="10" fill="#689F38"/>
+                                <!-- Silla del psicólogo -->
+                                <rect x="30" y="90" width="50" height="8" rx="4" fill="#5D8AA8"/>
+                                <rect x="35" y="98" width="6" height="32" rx="2" fill="#4A7A94"/>
+                                <rect x="69" y="98" width="6" height="32" rx="2" fill="#4A7A94"/>
+                                <rect x="28" y="70" width="8" height="28" rx="3" fill="#5D8AA8"/>
+                                <!-- Psicóloga (sentada) -->
+                                <circle cx="55" cy="55" r="12" fill="#D4A574"/>
+                                <ellipse cx="55" cy="42" rx="14" ry="10" fill="#4A4A4A"/>
+                                <rect x="43" y="67" width="24" height="24" rx="4" fill="#2A9D8F"/>
+                                <rect x="45" y="85" width="8" height="18" rx="2" fill="#1B3A5C"/>
+                                <rect x="57" y="85" width="8" height="18" rx="2" fill="#1B3A5C"/>
+                                <!-- Silla del paciente -->
+                                <rect x="110" y="90" width="50" height="8" rx="4" fill="#E8A87C"/>
+                                <rect x="115" y="98" width="6" height="32" rx="2" fill="#D4956A"/>
+                                <rect x="149" y="98" width="6" height="32" rx="2" fill="#D4956A"/>
+                                <rect x="108" y="70" width="8" height="28" rx="3" fill="#E8A87C"/>
+                                <!-- Paciente (sentado) -->
+                                <circle cx="135" cy="55" r="12" fill="#F5D0A9"/>
+                                <ellipse cx="135" cy="42" rx="13" ry="9" fill="#6B4226"/>
+                                <rect x="123" y="67" width="24" height="24" rx="4" fill="#E07B2A"/>
+                                <rect x="125" y="85" width="8" height="18" rx="2" fill="#1B3A5C"/>
+                                <rect x="137" y="85" width="8" height="18" rx="2" fill="#1B3A5C"/>
+                                <!-- Nube de diálogo / cerebro -->
+                                <ellipse cx="135" cy="25" rx="22" ry="16" fill="#E8F5F3" stroke="#2A9D8F" stroke-width="1.5"/>
+                                <text x="126" y="30" font-size="18" fill="#2A9D8F">&#129504;</text>
+                                <!-- Cuaderno / Clipboard -->
+                                <rect x="8" y="30" width="20" height="28" rx="2" fill="#fff" stroke="#ccc" stroke-width="1"/>
+                                <line x1="12" y1="38" x2="24" y2="38" stroke="#2A9D8F" stroke-width="2"/>
+                                <line x1="12" y1="44" x2="22" y2="44" stroke="#2A9D8F" stroke-width="2"/>
+                                <line x1="12" y1="50" x2="20" y2="50" stroke="#2A9D8F" stroke-width="2"/>
+                                <circle cx="18" cy="28" r="4" fill="#2A9D8F"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <button class="role-btn role-btn-naranja" id="btn-psicologo">INGRESAR COMO PSICÓLOGO/A</button>
+                </div>
+            </div>
+
+            <!-- Texto inferior -->
+            <p class="home-footer-text">Accede a herramientas, recursos e información para apoyar el éxito y bienestar de los estudiantes.</p>
+
+            <!-- Footer -->
+            <footer class="home-footer">
+                <a href="#" id="link-acerca">Acerca del Proyecto</a>
+                <a href="#" id="link-ayuda">¿Necesitas ayuda?</a>
+            </footer>
+        </div>
+    </section>
+
+    <!-- ======================================== -->
+    <!-- VISTA 2: SECCIÓN DOCENTE                 -->
+    <!-- ======================================== -->
+    <section id="vista-docente" class="vista">
+        <!-- Header -->
+        <header class="section-header header-docente">
+            <button class="btn-volver" id="btn-volver-docente">&#8592; Volver al Inicio</button>
+            <h2 class="section-title">&#128203; Portal Docente — Gestión Académica</h2>
+        </header>
+
+        <div class="section-content">
+            <!-- Panel de resumen estadístico -->
+            <div class="stats-panel">
+                <div class="stat-card">
+                    <span class="stat-number" id="stat-total">0</span>
+                    <span class="stat-label">Total Estudiantes</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="stat-asistencias">0</span>
+                    <span class="stat-label">Asistencias Hoy</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="stat-inasistencias">0</span>
+                    <span class="stat-label">Inasistencias Hoy</span>
+                </div>
+                <div class="stat-card" id="stat-alerta-card">
+                    <span class="stat-number" id="stat-alertas">0</span>
+                    <span class="stat-label">En Alerta</span>
+                </div>
+            </div>
+
+            <!-- Tabla de estudiantes -->
+            <div class="table-container">
+                <table class="tabla-estudiantes" id="tabla-estudiantes">
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>Nombre</th>
+                            <th>Programa</th>
+                            <th>Semestre</th>
+                            <th>Asistencia</th>
+                            <th>Nota</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-estudiantes">
+                        <!-- Filas generadas dinámicamente por JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======================================== -->
+    <!-- VISTA 3: SECCIÓN PSICOLOGÍA              -->
+    <!-- ======================================== -->
+    <section id="vista-psicologia" class="vista">
+        <!-- Header -->
+        <header class="section-header header-psicologia">
+            <button class="btn-volver" id="btn-volver-psicologia">&#8592; Volver al Inicio</button>
+            <h2 class="section-title">&#129504; Portal Psicología — Seguimiento Estudiantil</h2>
+        </header>
+
+        <div class="section-content">
+            <!-- Bandeja de alertas -->
+            <div id="bandeja-alertas">
+                <!-- Contenido generado dinámicamente por JS -->
+            </div>
+
+            <!-- Historial de casos -->
+            <div class="historial-casos-seccion">
+                <h3 class="historial-casos-titulo">&#128214; Historial de Casos</h3>
+                <div id="historial-casos">
+                    <!-- Contenido generado dinámicamente por JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Script principal -->
+    <script src="app.js"></script>
+</body>
+</html>

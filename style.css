@@ -1,0 +1,1102 @@
+/* ============================================ */
+/* RESET Y VARIABLES GLOBALES                   */
+/* ============================================ */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --teal: #2A9D8F;
+    --teal-oscuro: #1f7a6f;
+    --naranja: #E07B2A;
+    --naranja-oscuro: #c56a1f;
+    --azul-oscuro: #1B3A5C;
+    --fondo-claro-1: #E8F5F3;
+    --fondo-claro-2: #F0F4FF;
+    --blanco: #FFFFFF;
+    --texto-principal: #2D2D2D;
+    --texto-secundario: #555555;
+    --verde-ok: #27AE60;
+    --rojo-alerta: #E74C3C;
+    --rojo-claro: #fde8e8;
+    --amarillo-claro: #fff9e6;
+    --gris-borde: #e0e0e0;
+    --gris-fila: #f7f7f7;
+    --sombra-card: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --sombra-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
+    --transicion: 0.3s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--texto-principal);
+    background: linear-gradient(135deg, var(--fondo-claro-1) 0%, var(--fondo-claro-2) 100%);
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* ============================================ */
+/* SISTEMA DE VISTAS (SPA)                      */
+/* ============================================ */
+.vista {
+    display: none;
+    opacity: 0;
+    transition: opacity var(--transicion);
+}
+
+.vista.activa {
+    display: block;
+    opacity: 1;
+}
+
+/* ============================================ */
+/* VISTA HOME — FONDO DECORATIVO                */
+/* ============================================ */
+#vista-home {
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    background: linear-gradient(160deg, #e6f7f5 0%, #f0f7ff 40%, #f5f0ff 100%);
+}
+
+.home-bg-decor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.decor-shape {
+    position: absolute;
+    border-radius: 50%;
+}
+
+.decor-circle-1 {
+    width: 200px;
+    height: 200px;
+    background: rgba(42, 157, 143, 0.08);
+    top: -40px;
+    left: -60px;
+}
+
+.decor-circle-2 {
+    width: 140px;
+    height: 140px;
+    background: rgba(224, 123, 42, 0.06);
+    bottom: 60px;
+    right: -30px;
+}
+
+.decor-triangle-1 {
+    width: 0;
+    height: 0;
+    border-left: 60px solid transparent;
+    border-right: 60px solid transparent;
+    border-bottom: 100px solid rgba(42, 157, 143, 0.06);
+    border-radius: 0;
+    top: 15%;
+    left: 5%;
+    transform: rotate(-15deg);
+}
+
+.decor-triangle-2 {
+    width: 0;
+    height: 0;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    border-bottom: 70px solid rgba(27, 58, 92, 0.05);
+    border-radius: 0;
+    bottom: 20%;
+    right: 8%;
+    transform: rotate(20deg);
+}
+
+.decor-dots {
+    width: 80px;
+    height: 80px;
+    background-image: radial-gradient(circle, rgba(42, 157, 143, 0.15) 2px, transparent 2px);
+    background-size: 16px 16px;
+    border-radius: 0;
+    top: 10%;
+    right: 12%;
+}
+
+/* ============================================ */
+/* VISTA HOME — CONTENEDOR                      */
+/* ============================================ */
+.home-container {
+    position: relative;
+    z-index: 1;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 50px 24px 30px;
+    text-align: center;
+}
+
+/* ============================================ */
+/* HOME — HEADER                                */
+/* ============================================ */
+.home-header {
+    margin-bottom: 36px;
+}
+
+.home-titulo {
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--azul-oscuro);
+    letter-spacing: 0.5px;
+    line-height: 1.15;
+    margin-bottom: 12px;
+}
+
+.home-subtitulo {
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: var(--texto-secundario);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* ============================================ */
+/* HOME — TARJETAS DE ROL                       */
+/* ============================================ */
+.home-cards {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    align-items: stretch;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+
+.role-card {
+    background: var(--blanco);
+    border-radius: 18px;
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    flex: 1 1 300px;
+    max-width: 380px;
+    min-width: 280px;
+    transition: transform var(--transicion), box-shadow var(--transicion);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.role-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+.role-card-header {
+    padding: 18px 20px;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--blanco);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.role-card-header.teal {
+    background: var(--teal);
+}
+
+.role-card-header.naranja {
+    background: var(--naranja);
+}
+
+.role-card-body {
+    padding: 24px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    background: linear-gradient(180deg, #f0faf8 0%, #ffffff 100%);
+}
+
+.role-card.role-psicologo .role-card-body {
+    background: linear-gradient(180deg, #fdf3ec 0%, #ffffff 100%);
+}
+
+.role-card-illustration {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.illustration-svg {
+    width: 200px;
+    height: 160px;
+}
+
+/* ============================================ */
+/* HOME — BOTONES DE ROL                        */
+/* ============================================ */
+.role-btn {
+    display: block;
+    width: calc(100% - 36px);
+    margin: 0 18px 18px;
+    padding: 16px 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--blanco);
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: transform var(--transicion), box-shadow var(--transicion), background var(--transicion);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.role-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+}
+
+.role-btn:active {
+    transform: translateY(0);
+}
+
+.role-btn-teal {
+    background: var(--teal);
+}
+
+.role-btn-teal:hover {
+    background: var(--teal-oscuro);
+}
+
+.role-btn-naranja {
+    background: var(--naranja);
+}
+
+.role-btn-naranja:hover {
+    background: var(--naranja-oscuro);
+}
+
+/* ============================================ */
+/* HOME — FOOTER TEXT                           */
+/* ============================================ */
+.home-footer-text {
+    font-size: 0.92rem;
+    color: var(--texto-secundario);
+    margin-bottom: 20px;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ============================================ */
+/* HOME — FOOTER                                */
+/* ============================================ */
+.home-footer {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    padding-top: 18px;
+    border-top: 1px solid var(--gris-borde);
+}
+
+.home-footer a {
+    font-size: 0.88rem;
+    color: var(--azul-oscuro);
+    text-decoration: none;
+    transition: color var(--transicion);
+}
+
+.home-footer a:hover {
+    color: var(--teal);
+    text-decoration: underline;
+}
+
+/* ============================================ */
+/* SECCIONES — HEADER COMÚN                    */
+/* ============================================ */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 24px;
+    color: var(--blanco);
+    flex-wrap: wrap;
+}
+
+.header-docente {
+    background: var(--teal);
+}
+
+.header-psicologia {
+    background: var(--naranja);
+}
+
+.section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    flex: 1;
+    text-align: center;
+}
+
+.btn-volver {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--blanco);
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background var(--transicion), transform var(--transicion);
+    white-space: nowrap;
+}
+
+.btn-volver:hover {
+    background: rgba(255, 255, 255, 0.35);
+    transform: translateY(-1px);
+}
+
+/* ============================================ */
+/* SECCIONES — CONTENIDO                        */
+/* ============================================ */
+.section-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 20px;
+}
+
+/* ============================================ */
+/* DOCENTE — PANEL DE ESTADÍSTICAS              */
+/* ============================================ */
+.stats-panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: var(--blanco);
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+    box-shadow: var(--sombra-card);
+    border-left: 4px solid var(--teal);
+    transition: transform var(--transicion);
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--azul-oscuro);
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--texto-secundario);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Tarjeta de alerta con borde naranja si hay alertas */
+#stat-alerta-card.alerta-activa {
+    border-left-color: var(--naranja);
+    background: #fff8f0;
+}
+
+#stat-alerta-card.alerta-activa .stat-number {
+    color: var(--naranja);
+}
+
+/* ============================================ */
+/* DOCENTE — TABLA                              */
+/* ============================================ */
+.table-container {
+    overflow-x: auto;
+    border-radius: 12px;
+    box-shadow: var(--sombra-card);
+    background: var(--blanco);
+}
+
+.tabla-estudiantes {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    min-width: 800px;
+}
+
+.tabla-estudiantes thead {
+    background: var(--azul-oscuro);
+    color: var(--blanco);
+}
+
+.tabla-estudiantes th {
+    padding: 14px 12px;
+    font-weight: 600;
+    text-align: left;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.tabla-estudiantes td {
+    padding: 12px;
+    border-bottom: 1px solid var(--gris-borde);
+    vertical-align: middle;
+}
+
+.tabla-estudiantes tbody tr:nth-child(even) {
+    background: var(--gris-fila);
+}
+
+.tabla-estudiantes tbody tr:hover {
+    box-shadow: inset 0 0 0 2px var(--teal);
+    background: #f0faf8;
+}
+
+/* Fila resaltada por nota baja (1 o 2) */
+.tabla-estudiantes tbody tr.fila-nota-baja {
+    background: var(--rojo-claro) !important;
+}
+
+/* Fila resaltada por estado Alerta */
+.tabla-estudiantes tbody tr.fila-alerta {
+    background: var(--amarillo-claro) !important;
+}
+
+/* ============================================ */
+/* DOCENTE — CELDAS DE ASISTENCIA               */
+/* ============================================ */
+.btn-asistencia {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 2px;
+    transition: transform var(--transicion), box-shadow var(--transicion);
+    white-space: nowrap;
+    min-height: 32px;
+}
+
+.btn-asistencia:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-asistio {
+    background: var(--verde-ok);
+    color: var(--blanco);
+}
+
+.btn-falto {
+    background: var(--rojo-alerta);
+    color: var(--blanco);
+}
+
+.asistencia-registrada {
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.asistencia-registrada.asistio {
+    color: var(--verde-ok);
+}
+
+.asistencia-registrada.falto {
+    color: var(--rojo-alerta);
+}
+
+/* ============================================ */
+/* DOCENTE — SELECTOR DE NOTA                   */
+/* ============================================ */
+.select-nota {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    padding: 6px 8px;
+    border: 1px solid var(--gris-borde);
+    border-radius: 6px;
+    background: var(--blanco);
+    cursor: pointer;
+    min-width: 80px;
+    transition: border-color var(--transicion);
+}
+
+.select-nota:focus {
+    outline: none;
+    border-color: var(--teal);
+}
+
+.nota-baja {
+    background: var(--rojo-claro) !important;
+    border-color: var(--rojo-alerta);
+}
+
+/* ============================================ */
+/* DOCENTE — ESTADO                             */
+/* ============================================ */
+.estado-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.estado-normal {
+    background: #e8f8f0;
+    color: var(--verde-ok);
+}
+
+.estado-alerta {
+    background: #fde8e8;
+    color: var(--rojo-alerta);
+}
+
+/* ============================================ */
+/* DOCENTE — BOTÓN REMITIR                      */
+/* ============================================ */
+.btn-remitir {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: var(--naranja);
+    color: var(--blanco);
+    transition: transform var(--transicion), box-shadow var(--transicion), background var(--transicion);
+    white-space: nowrap;
+    min-height: 32px;
+}
+
+.btn-remitir:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(224, 123, 42, 0.4);
+    background: var(--naranja-oscuro);
+}
+
+.btn-remitir:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* ============================================ */
+/* PSICOLOGÍA — BANDEJA DE ALERTAS              */
+/* ============================================ */
+.bandeja-vacia {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--blanco);
+    border-radius: 16px;
+    box-shadow: var(--sombra-card);
+}
+
+.bandeja-vacia-icono {
+    font-size: 3.5rem;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.bandeja-vacia-texto {
+    font-size: 1rem;
+    color: var(--texto-secundario);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* ============================================ */
+/* PSICOLOGÍA — TARJETA DE ESTUDIANTE           */
+/* ============================================ */
+.alerta-card {
+    background: var(--blanco);
+    border-radius: 16px;
+    box-shadow: var(--sombra-card);
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-left: 5px solid var(--rojo-alerta);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.alerta-card.resolviendo {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.alerta-card-header {
+    padding: 16px 20px;
+    background: #fde8e8;
+    border-bottom: 1px solid var(--gris-borde);
+}
+
+.alerta-card-nombre {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--rojo-alerta);
+    margin-bottom: 4px;
+}
+
+.alerta-card-info {
+    font-size: 0.85rem;
+    color: var(--texto-secundario);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+}
+
+.alerta-card-datos {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--gris-borde);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+}
+
+.alerta-dato {
+    font-size: 0.85rem;
+}
+
+.alerta-dato-label {
+    font-weight: 600;
+    color: var(--texto-secundario);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    display: block;
+}
+
+.alerta-dato-valor {
+    color: var(--texto-principal);
+    font-weight: 400;
+}
+
+/* ============================================ */
+/* PSICOLOGÍA — HISTORIAL                       */
+/* ============================================ */
+.alerta-historial {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--gris-borde);
+}
+
+.alerta-historial-titulo {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--azul-oscuro);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.historial-vacio {
+    font-size: 0.85rem;
+    color: #999;
+    font-style: italic;
+}
+
+.historial-item {
+    background: var(--gris-fila);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    border-left: 3px solid var(--teal);
+}
+
+.historial-item-fecha {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--teal);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.historial-item-texto {
+    font-size: 0.85rem;
+    color: var(--texto-principal);
+}
+
+/* ============================================ */
+/* PSICOLOGÍA — FORMULARIO SEGUIMIENTO          */
+/* ============================================ */
+.alerta-formulario {
+    padding: 20px;
+}
+
+.alerta-formulario-titulo {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--azul-oscuro);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.alerta-textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    border: 2px solid var(--gris-borde);
+    border-radius: 10px;
+    resize: vertical;
+    transition: border-color var(--transicion);
+    margin-bottom: 14px;
+}
+
+.alerta-textarea:focus {
+    outline: none;
+    border-color: var(--teal);
+}
+
+.alerta-botones {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn-accion {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform var(--transicion), box-shadow var(--transicion), background var(--transicion);
+    min-height: 44px;
+}
+
+.btn-accion:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.btn-guardar {
+    background: var(--teal);
+    color: var(--blanco);
+}
+
+.btn-guardar:hover {
+    background: var(--teal-oscuro);
+}
+
+.btn-resolver {
+    background: var(--verde-ok);
+    color: var(--blanco);
+}
+
+.btn-resolver:hover {
+    background: #1e8449;
+}
+
+/* ============================================ */
+/* PSICOLOGÍA — HISTORIAL DE CASOS              */
+/* ============================================ */
+.historial-casos-seccion {
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 2px solid var(--gris-borde);
+}
+
+.historial-casos-titulo {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--azul-oscuro);
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+.historial-caso-card {
+    background: var(--blanco);
+    border-radius: 14px;
+    box-shadow: var(--sombra-card);
+    margin-bottom: 16px;
+    overflow: hidden;
+    border-left: 5px solid var(--teal);
+    transition: transform var(--transicion);
+}
+
+.historial-caso-card:hover {
+    transform: translateY(-2px);
+}
+
+.historial-caso-card.caso-resuelto {
+    border-left-color: var(--verde-ok);
+    opacity: 0.85;
+}
+
+.historial-caso-header {
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    background: #f7fdfb;
+    border-bottom: 1px solid var(--gris-borde);
+}
+
+.historial-caso-nombre {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--texto-principal);
+}
+
+.historial-caso-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.historial-caso-badge.activo {
+    background: #fde8e8;
+    color: var(--rojo-alerta);
+}
+
+.historial-caso-badge.resuelto {
+    background: #e8f8f0;
+    color: var(--verde-ok);
+}
+
+.historial-caso-info {
+    padding: 12px 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 20px;
+    font-size: 0.82rem;
+    color: var(--texto-secundario);
+    border-bottom: 1px solid var(--gris-borde);
+}
+
+.historial-caso-observaciones {
+    padding: 14px 18px;
+}
+
+.historial-caso-obs-titulo {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.historial-caso-obs-item {
+    background: var(--gris-fila);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    border-left: 3px solid var(--teal);
+}
+
+.historial-caso-obs-fecha {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--teal);
+    display: block;
+    margin-bottom: 2px;
+}
+
+.historial-caso-obs-texto {
+    font-size: 0.82rem;
+    color: var(--texto-principal);
+}
+
+.historial-caso-vacio {
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--blanco);
+    border-radius: 14px;
+    box-shadow: var(--sombra-card);
+}
+
+.historial-caso-vacio-icono {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.historial-caso-vacio-texto {
+    font-size: 0.9rem;
+    color: var(--texto-secundario);
+}
+
+/* ============================================ */
+/* RESPONSIVE — TABLET (< 768px)                */
+/* ============================================ */
+@media (max-width: 768px) {
+    .home-titulo {
+        font-size: 2rem;
+    }
+
+    .home-subtitulo {
+        font-size: 0.95rem;
+    }
+
+    .home-cards {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
+
+    .role-card {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .section-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .section-title {
+        font-size: 1rem;
+    }
+
+    .stats-panel {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .btn-volver {
+        align-self: flex-start;
+    }
+
+    .alerta-card-datos {
+        grid-template-columns: 1fr;
+    }
+
+    .alerta-botones {
+        flex-direction: column;
+    }
+
+    .btn-accion {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* ============================================ */
+/* RESPONSIVE — MÓVIL PEQUEÑO (< 480px)         */
+/* ============================================ */
+@media (max-width: 480px) {
+    .home-container {
+        padding: 32px 16px 20px;
+    }
+
+    .home-titulo {
+        font-size: 1.6rem;
+    }
+
+    .home-subtitulo {
+        font-size: 0.88rem;
+    }
+
+    .illustration-svg {
+        width: 160px;
+        height: 130px;
+    }
+
+    .role-card-header {
+        padding: 14px 16px;
+        font-size: 1.15rem;
+        letter-spacing: 2px;
+    }
+
+    .role-btn {
+        font-size: 0.88rem;
+        padding: 14px 16px;
+    }
+
+    .home-footer-text {
+        font-size: 0.85rem;
+    }
+
+    .home-footer {
+        gap: 20px;
+    }
+
+    .home-footer a {
+        font-size: 0.82rem;
+    }
+
+    .stats-panel {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .stat-card {
+        padding: 14px 10px;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.7rem;
+    }
+
+    .section-content {
+        padding: 16px 12px;
+    }
+
+    .decor-circle-1 {
+        width: 120px;
+        height: 120px;
+    }
+
+    .decor-circle-2 {
+        width: 80px;
+        height: 80px;
+    }
+
+    .decor-dots {
+        width: 50px;
+        height: 50px;
+        background-size: 12px 12px;
+    }
+}
+
+/* ============================================ */
+/* UTILIDADES                                   */
+/* ============================================ */
+.texto-verde {
+    color: var(--verde-ok);
+}
+
+.texto-rojo {
+    color: var(--rojo-alerta);
+}
+
+.texto-gris {
+    color: #999;
+}
